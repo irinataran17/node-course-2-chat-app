@@ -16,13 +16,18 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log('New user connected');
 
+//newMessage - от сервера к клиенту/ emmited by server
+//createMessage - emitted by client, from cient to server/ sending data from client to server
+
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
 
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-    socket.on('createMessage', (message) => {
+    //this is event listener
+    socket.on('createMessage', (message, callback) => {
         console.log('createMessage', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback('This is from the server');
     });
 
     socket.on('disconnect', () => {
