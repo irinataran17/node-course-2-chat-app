@@ -49,6 +49,7 @@ io.on('connection', (socket) => {
 
         socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
         socket.to(params.room).broadcast.emit('newMessage', generateMessage('Admin', `${params.name} has joined`));
+       
         callback();
     });
 
@@ -59,7 +60,7 @@ io.on('connection', (socket) => {
         if (user && isRealString (message.text)) {
             io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
         }
-        
+      
         callback();
     });
 
@@ -69,6 +70,7 @@ io.on('connection', (socket) => {
         if (user) {
             io.to(user.room).emit('newLocationMessage', generateLocationMessage(user.name, coords.latitude, coords.longitude));
         }
+      
     });
 
     socket.on('disconnect', () => {
@@ -79,6 +81,7 @@ io.on('connection', (socket) => {
             io.to(user.room).emit('updateUserList', users.getUserList(user.room));
             io.to(user.room).emit('newMessage', generateMessage('Admin', `${user.name} has left.`));
         }
+  
     });
 });
 

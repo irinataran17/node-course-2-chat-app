@@ -2,19 +2,17 @@ $(document).ready(function() {
 
     var socket = io();
 
-    function scrollToBottom () {
-        //Selectors
+    function scrollToBottom() {
         var messages = $('#messages');
         var newMessage = messages.children('li:last-child');
-        //Heigts
-        var clientsHeight = messages.prop('clientHeight');
+    
+        var clientHeight = messages.prop('clientHeight');
         var scrollTop = messages.prop('scrollTop');
         var scrollHeight = messages.prop('scrollHeight');
-        var newMessageHeight = newMessage.innerHeight();
+        let newMessageHeight = newMessage.innerHeight();
         var lastMessageHeight = newMessage.prev().innerHeight();
-
-
-        if (clientsHeight + screenTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    
+        if(clientHeight + scrollTop + newMessageHeight + lastMessageHeight>= scrollHeight) {
             messages.scrollTop(scrollHeight);
         }
     };
